@@ -2,9 +2,12 @@
 % Please edit documentation in R/sum_total.R
 \name{sum_total}
 \alias{sum_total}
+\alias{sum_total_}
 \title{Sum over one dimension of a data frame}
 \usage{
 sum_total(data, group, value = NA, name = "Total")
+
+sum_total_(data, group, value = "NA", name = "Total", na.rm = TRUE)
 }
 \arguments{
 \item{data}{a data frame}
@@ -15,6 +18,9 @@ sum_total(data, group, value = NA, name = "Total")
 
 \item{name}{entry in column \code{group} for the sum; defaults to
 \code{"Total"}}
+
+\item{na.rm}{\code{logical.} Should missing values (including NaN) be removed
+(default)?}
 }
 \value{
 a data frame
@@ -25,13 +31,25 @@ of a category in a data frame.
 }
 \examples{
 require(dplyr)
-data <- expand.grid(UPPER = LETTERS[1:2], lower = letters[24:26],
-                    numbers = 1:2) \%>\%
-    mutate(value = 1:n()) \%>\%
-    group_by(UPPER)
-data
-data \%>\%
+data <- expand.grid(
+    UPPER  = LETTERS[1:2],
+    lower  = letters[24:26],
+    number = 1:2
+) \%>\%
+    arrange(UPPER, lower, number) \%>\%
+    mutate(value = 1:n())
+print(data)
+
+data.totals <- data \%>\%
+    # grouping is preserved through the summation
+    group_by(UPPER) \%>\%
     sum_total(lower)
+print(data.totals)
+
+data.totals \%>\%
+    filter(!(lower == "Total" & number == 2)) \%>\%
+    # existing totals are filtered out
+    sum_total_("lower")
 
 }
 \author{
