@@ -11,35 +11,6 @@
 #'
 #' @author Michaja Pehl
 #'
-#' @details Checking is performed for all variables and regions in
-#' `check_variables` and `check_regions`, which can be passed as a list of
-#' format
-#' ```
-#' list("sum" = c("summand1", "summand2", ...))
-#' ```
-#' a character string of format
-#' ```
-#' sum1
-#' summand1a
-#' summand1b
-#'
-#' sum2
-#' summand2a
-#' ...
-#' ```
-#' or as the path to a text file with this format.
-#'
-#' If checking should be performed for variables or regions that are neither sum
-#' nor summand (e.g., the variable 'GDP' should be summed across regions, but is
-#' itself not a sum of other variables), include them as sum and their only
-#' summand in the respective list (i.e., `list("GDP" = "GDP")` or as a double
-#' line in the character string or file.
-#'
-#' If `check_regions` is `NULL`, variables are check across all regions in
-#' `quitte`.
-#'
-#' @examples
-#' require(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 #' quitte <- rbind(
 #'     data.frame(
 #'         model    = "REMIND",

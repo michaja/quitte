@@ -26,35 +26,6 @@
 #'     (REMIND .mif files have between 55000 and 105000 lines for H12 and EU21
 #'     regional settings, respectively.)
 #'
-#' @details
-#' In order to process large data sets, like IIASA data base snapshots,
-#' `read.quitte()` reads provided files in chunks of `chunk_size` lines
-#' (not for Excel files), and applies `filter.function()` to the chunks.  This
-#' allows for filtering data piece-by-piece, without exceeding available memory.
-#' `filter.function` is a function taking one argument, a quitte data frame of
-#' the read chunk, and is expected to return a data frame.  Usually it should
-#' simply contain all the filters usually applied after all the data is read in.
-#' Suppose there is a file `big_IIASA_snapshot.csv`, from which only data for
-#' the REMIND and MESSAGE models between the years 2020 to 2050 is of interest.
-#' Normally, this data would be processed as
-#' ```
-#' read.quitte(file = 'big_IIASA_snapshot.csv') %>%
-#'     filter(grepl('^(REMIND|MESSAGE)', .data$model),
-#'            between(.data$period, 2020, 2060))
-#' ```
-#' If however `big_IIASA_snapshot.csv` is too large to be read in completely,
-#' it can be read using
-#' ```
-#' read.quitte(file = 'big_IIASA_snapshot.csv',
-#'             filter.function = function(x) {
-#'                 x %>%
-#'                     filter(grepl('^(REMIND|MESSAGE)', .data$model),
-#'                            between(.data$period, 2020, 2060))
-#'             })
-#' ```
-#'
-#' @return A quitte data frame.
-#'
 #' @author Michaja Pehl
 #'
 #' @examples
